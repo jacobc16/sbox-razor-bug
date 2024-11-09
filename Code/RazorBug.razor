@@ -1,0 +1,44 @@
+@using Sandbox.UI
+@inherits PanelComponent
+@namespace Sandbox
+
+<root>
+	<TextEntry Value:Bind="@Name"/>
+	<Text @ExampleDiv="@ExampleDiv"></Text>
+</root>
+
+@code
+{ 
+	public string Name { get; set; } = "Hello World";
+	public IExample ExampleDiv { get; set; }
+
+	protected override void OnStart()
+	{
+		ExampleDiv = new Example( "Hello World" );
+	}
+
+	protected override void OnUpdate()
+	{
+		ExampleDiv.Name = Name;
+	}
+
+	/// <summary>
+	/// the hash determines if the system should be rebuilt. If it changes, it will be rebuilt
+	/// </summary>
+	protected override int BuildHash() => System.HashCode.Combine( Name, ExampleDiv );
+	
+	public interface IExample
+	{
+		public string Name { get; set; }
+	}
+	
+	public class Example : IExample
+	{
+		public string Name { get; set; }
+		
+		public Example( string name )
+		{
+			Name = name;
+		}
+	}
+}

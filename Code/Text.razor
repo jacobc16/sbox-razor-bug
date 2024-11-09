@@ -1,0 +1,20 @@
+@using Sandbox.UI
+@inherits Sandbox.UI.Panel
+@attribute [StyleSheet]
+
+<root>
+	@if ( ExampleDiv is RazorBug.Example example )
+	{
+		<div class="title">@(example.Name)</div>
+	} else
+	{
+		<div class="title">No IExample</div>
+	}
+</root>
+
+@code
+{ 
+	public RazorBug.IExample ExampleDiv { get; set; }
+
+	protected override int BuildHash() => System.HashCode.Combine( ExampleDiv );
+}
